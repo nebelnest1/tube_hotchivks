@@ -462,3 +462,119 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
         },
         th: { 
           titleArr: [123,67,125,32,3594,3655,3629,3585,3607,3633,3657,3591,3648,3617,3639,3629,3591,58,32,3623,3636,3604,3637,3650,3629,3626,3656,3623,3609,3605,3633,3623,3626,3640,3604,3614,3634,3619,3650,3588,3619,3660,3627,3621,3640,3604,3623,3656,3629,3609,3648,3609,3655,3605,32,55357,56613,32,3619,3637,3610,3604,3641,3585,3656,3629,3609,3650,3604,3609,3621,3610,33,33,33], fallbackGeo: "ประเทศ",
+          cta: "Free 3 days - Join Now!",
+          views: "3M", comments: "ความคิดเห็น", download: "ดาวน์โหลด", report: "รายงาน", related: "วิดีโอที่เกี่ยวข้อง", playlists: "เพลย์ลิสต์ที่เกี่ยวข้อง",
+          randomArr: [
+            [3648,3607,3611,3607,3633,3614,3648,3629,3591,3627,3621,3640,3604,3605,3636,3604,3585,3621,3657,3629,3591],
+            [3648,3612,3618,3649,3614,3619,3656,3616,3634,3614,3585,3621,3657,3629,3591,3649,3629,3610,3606,3656,3634,3618,3617,3639,3629,3626,3617,3633,3588,3619,3648,3621,3656,3609],
+            [3588,3621,3636,3611,3617,3639,3629,3626,3617,3633,3588,3619,3648,3621,3656,3609,3626,3640,3604,3614,3636,3648,3624,3625,3592,3634,3585,3588,3621,3633,3591,3586,3657,3629,3617,3641,3621,3626,3656,3623,3609,3605,3633,3623],
+            [3623,3636,3604,3637,3650,3629,3627,3621,3640,3604,3649,3610,3610,3650,3617,3656,3617,3637,3648,3595,3655,3609,3648,3595,3629,3619,3660,3585,3621,3634,3618,3648,3611,3655,3609,3585,3619,3632,3649,3626,3652,3623,3619,3633,3621]
+          ],
+          modal: { title: "จะไปแล้วเหรอ? 😢", desc: "เดี๋ยวก่อน—วิดีโอโหลดใกล้เสร็จแล้ว ส่วนที่ดีที่สุดกำลังจะเริ่มในอีกหนึ่งวินาที", stay: "อยู่ต่อ", leave: "ออก" }
+        },
+        ar: { 
+          titleArr: [123,67,125,32,1601,1610,32,1589,1583,1605,1577,58,32,1578,1587,1585,1610,1576,32,1571,1602,1608,1609,32,1601,1610,1583,1610,1608,32,1582,1575,1589,32,1593,1604,1609,32,1575,1604,1573,1606,1578,1585,1606,1578,32,55357,56613,32,1588,1575,1607,1583,32,1602,1576,1604,32,1575,1604,1581,1584,1601,33,33,33], fallbackGeo: "البلاد",
+          cta: "Free 3 days - Join Now!",
+          views: "3M", comments: "تعليقات", download: "تحميل", report: "إبلاغ", related: "فيديوهات ذات صلة", playlists: "قوائم تشغيل ذات صلة",
+          randomArr: [
+            [1578,1587,1585,1610,1576,32,1588,1585,1610,1591,32,1605,1606,1586,1604,1610,32,1575,1604,1578,1602,1591,1578,1607,32,1575,1604,1603,1575,1605,1610,1585,1575],
+            [1601,1590,1581,32,1604,1602,1591,1575,1578,32,1603,1575,1605,1610,1585,1575,32,1582,1601,1610,1577,32,1604,1607,1608,1575,1577],
+            [1605,1602,1591,1593,32,1607,1608,1575,1577,32,1581,1589,1585,1610,32,1605,1606,32,1571,1585,1588,1610,1601,32,1582,1575,1589],
+            [1575,1606,1578,1588,1575,1585,32,1601,1610,1583,1610,1608,32,1605,1587,1585,1576,32,1578,1583,1608,1606,32,1585,1602,1575,1576,1577]
+          ],
+          modal: { title: "هل تغادر بالفعل؟ 😢", desc: "انتظر—الفيديو على وشك التحميل. الجزء الأفضل يبدأ في ثانية.", stay: "البقاء", leave: "المغادرة" }
+        }
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      let userLang = (urlParams.get("lang") || navigator.language || navigator.userLanguage).slice(0, 2).toLowerCase();
+      if (userLang === "fil") userLang = "tl";
+      if (!dict[userLang]) userLang = "en";
+      const t = dict[userLang];
+
+      if (userLang === "ar") {
+        document.documentElement.setAttribute("dir", "rtl");
+      }
+
+      function sanitizeCity(s) {
+        if (!s) return "";
+        s = String(s).trim();
+        if (s.length < 2 || s.length > 40) return "";
+        if (/[<>{}\[\]]/.test(s)) return "";
+        if (s.toLowerCase().includes("city")) return "";
+        return s.replace(/\s+/g, " ");
+      }
+
+      const cityParam = sanitizeCity(urlParams.get("city"));
+      const displayCity = cityParam !== "" ? cityParam : t.fallbackGeo;
+      
+      const decodedRawTitle = decTitle(t.titleArr, "{C} Video is loading...");
+      const finalTitle = decodedRawTitle.replace("{C}", displayCity);
+
+      const setIfExist = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+      };
+
+      setIfExist("t-mainTitle", finalTitle);
+
+      // Раскодируем массив рекомендаций на лету из Unicode чисел
+      const titleElements = document.querySelectorAll(".dynamic-text");
+      titleElements.forEach(function(el, index) {
+        if (t.randomArr && t.randomArr[index]) {
+          el.innerText = decTitle(t.randomArr[index], "Related video");
+        }
+      });
+
+      // Перевод CTA кнопки
+      if (t.cta) {
+        setIfExist("t-cta", t.cta);
+      }
+
+      setIfExist("m-title", t.modal.title);
+      setIfExist("m-desc", t.modal.desc);
+      setIfExist("m-stay", t.modal.stay);
+      setIfExist("m-leave", t.modal.leave);
+
+      window.__getModalCopy = function () { return t.modal; };
+
+      // Рандомизация миниатюр
+      const thumb1 = document.getElementById('thumb-1');
+      const thumb2 = document.getElementById('thumb-2');
+      const thumb3 = document.getElementById('thumb-3');
+      if (thumb1) thumb1.src = Math.random() > 0.5 ? './assets/images/1.webp' : './assets/images/1_1.webp';
+      if (thumb2) thumb2.src = Math.random() > 0.5 ? './assets/images/2.webp' : './assets/images/2_2.webp';
+      if (thumb3) thumb3.src = Math.random() > 0.5 ? './assets/images/3.webp' : './assets/images/3_3.webp';
+
+      // --- ТВОЙ СКРИПТ ПОДГРУЗКИ С ИСПРАВЛЕННЫМИ КЛАССАМИ ПОД HOT CHIVKS ---
+      const frame = document.querySelector(".xh-frame");
+      const shimmer = document.querySelector(".xh-loader");
+
+      // В HOT CHIVKS нет кнопки Play, поэтому используем frame для проверки
+      if (frame) {
+        const cid = urlParams.get("var_2");
+        const cr = urlParams.get("creative_id");
+        const fallback = "./assets/images/default.webp";
+
+        if (shimmer) shimmer.style.display = "none";
+
+        if (cid && cr) {
+          frame.src = `https://cdn.x0x.online/frames/${encodeURIComponent(cid)}/${encodeURIComponent(cr)}.webp`;
+          frame.classList.add("is-ready", "loaded");
+
+          frame.addEventListener("error", function onError() {
+            frame.removeEventListener("error", onError);
+            frame.src = fallback;
+            frame.classList.add("is-ready", "loaded");
+          }, { once: true });
+        } else {
+          frame.src = fallback;
+          frame.classList.add("is-ready", "loaded");
+        }
+      }
+    });
+  </script>
+
+  <script defer src="./assets/scripts/common.js?v=10"></script>
+</body>
+</html>
