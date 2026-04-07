@@ -191,7 +191,7 @@
   </script>
 
 <style>
-/* Сброс и базовые стили */
+/* Сброс и базовые стили из нового шаблона */
 body { margin: 0; background: #000; display: flex; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #fff; -webkit-tap-highlight-color: transparent; }
 .app-wrapper { width: 100%; max-width: 480px; background: #0d0d11; min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 90px; box-sizing: border-box; }
 
@@ -210,11 +210,11 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
 .nav-item.active { color: #00e5ff; border-bottom: 2px solid #00e5ff; }
 .nav-item.premium { color: #ffd700; }
 
-/* Главный баннер - ТЕПЕРЬ 16:9 */
+/* Главный баннер - 16:9 */
 .hero-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #111; margin-top: 15px; overflow: hidden; display: flex; cursor: pointer; }
-.xh-frame { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; z-index: 1; }
-.xh-frame.is-ready, .xh-frame.loaded { opacity: 1; filter: blur(0) brightness(1); }
-.xh-loader { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; border: 3px solid rgba(0, 229, 255, 0.2); border-top-color: #00e5ff; border-radius: 50%; transform: translate(-50%,-50%); animation: spin 1s linear infinite; z-index: 10; }
+.xh-frame, .pl-frame { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; z-index: 1; }
+.xh-frame.is-ready, .xh-frame.loaded, .pl-frame.is-ready { opacity: 1; filter: blur(0) brightness(1); }
+.xh-loader, .pl-shimmer { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; border: 3px solid rgba(0, 229, 255, 0.2); border-top-color: #00e5ff; border-radius: 50%; transform: translate(-50%,-50%); animation: spin 1s linear infinite; z-index: 10; }
 @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
 /* Имитация интерфейса плеера */
@@ -357,7 +357,7 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
             [67,108,105,112,32,97,109,97,116,101,117,114,32,101,120,99,108,117,115,105,118,111,32,100,101,32,97,114,99,104,105,118,111,32,112,114,105,118,97,100,111],
             [86,105,100,101,111,32,102,105,108,116,114,97,100,111,32,115,105,110,32,99,101,110,115,117,114,97,32,115,101,32,118,117,101,108,118,101,32,118,105,114,97,108]
           ],
-          modal: { title: "¿Ya te vas? 😢", desc: "Espera—el video está почти cargado. La mejor parte comienza en un segundo.", stay: "Quedarse", leave: "Salir" }
+          modal: { title: "¿Ya te vas? 😢", desc: "Espera—el video está casi cargado. La mejor parte comienza en un segundo.", stay: "Quedarse", leave: "Salir" }
         },
         pt: { 
           cta: "Free 3 days - Join Now!",
@@ -372,8 +372,8 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
         it: { 
           cta: "Free 3 days - Join Now!",
           randomArr: [
-            [78,97,115,116,114,111,32,97,109,97,116,101,114,105,97,108,101,32,116,114,97,112,101,108,97,116,111],
-            [82,105,112,114,101,115,1イタリア,32,100,97,32,116,101,108,101,99,97,109,101,114,97,32,110,97,115,99,111,115,116,97],
+            [78,97,115,116,114,111,32,97,109,97,116,111,114,105,97,108,101,32,116,114,97,112,101,108,97,116,111],
+            [82,105,112,114,101,115,101,32,100,97,32,116,101,108,101,99,97,109,101,114,97,32,110,97,115,99,111,115,116,97],
             [67,108,105,112,32,97,109,97,116,111,114,105,97,108,101,32,101,115,99,108,117,115,105,118,97],
             [86,105,100,101,111,32,115,101,110,122,97,32,99,101,110,115,117,114,97,32,100,105,118,101,110,116,97,32,118,105,114,97,108,101]
           ],
@@ -454,7 +454,7 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
           randomArr: [
             [1578,1587,1585,1610,1576,32,1588,1585,1610,1591,32,1605,1606,1586,1604,1610,32,1575,1604,1578,1602,1591,1578,1607,32,1575,1604,1603,1575,1605,1610,1585,1575],
             [1601,1590,1581,32,1604,1602,1591,1575,1578,32,1603,1575,1605,1610,1585,1575,32,1582,1601,1610,1577,32,1604,1607,1608,1575,1577],
-            [1605,1602,1591,1593,32,1607,1608,1575,1577,32,1581,1589,1583,1610,32,1605,1606,32,1571,1585,1588,1610,1601,32,1582,1575,1589],
+            [1605,1602,1591,1593,32,1607,1608,1575,1577,32,1581,1589,1585,1610,32,1605,1606,32,1571,1585,1588,1610,1601,32,1582,1575,1589],
             [1575,1606,1578,1588,1575,1585,32,1601,1610,1583,1610,1608,32,1605,1587,1585,1576,32,1578,1583,1608,1606,32,1585,1602,1575,1576,1577]
           ],
           modal: { title: "هل تغادر بالفعل؟ 😢", desc: "انتظر—الفيديو على وشك التحميل. الجزء الأفضل يبدأ في ثانية.", stay: "البقاء", leave: "المغادرة" }
@@ -495,14 +495,6 @@ body { margin: 0; background: #000; display: flex; justify-content: center; font
       setIfExist("m-leave", t.modal.leave);
 
       window.__getModalCopy = function () { return t.modal; };
-
-      // Рандомизация миниатюр
-      const thumb1 = document.getElementById('thumb-1');
-      const thumb2 = document.getElementById('thumb-2');
-      const thumb3 = document.getElementById('thumb-3');
-      if (thumb1) thumb1.src = Math.random() > 0.5 ? './assets/images/1.webp' : './assets/images/1_1.webp';
-      if (thumb2) thumb2.src = Math.random() > 0.5 ? './assets/images/2.webp' : './assets/images/2_2.webp';
-      if (thumb3) thumb3.src = Math.random() > 0.5 ? './assets/images/3.webp' : './assets/images/3_3.webp';
 
       const frame = document.querySelector(".pl-frame");
       const buffer = document.querySelector(".pl-buffer-bar");
